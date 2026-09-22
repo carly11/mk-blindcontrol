@@ -1,0 +1,31 @@
+name: Compile Firmware
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch: # Allows you to manually trigger it anytime
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install PlatformIO
+      run: pip install --upgrade platformio
+
+    - name: Build Firmware
+      run: pio run
+
+    - name: Upload Binary Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: blindcontrol-nodemcu-firmware
+        path: .pio/build/nodemcuv2/firmware.bin
