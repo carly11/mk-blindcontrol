@@ -298,6 +298,7 @@ struct ServoState {
 // of whether the compiler actually runs in-class initializers for globals
 // (the ESP8266 Xtensa toolchain is not guaranteed to under all conditions).
 void servoStateInit() {
+  get_save_state();
   servoState.current          = ServoPos;   // honour any restored position
   servoState.target           = ServoPos;
   servoState.nextStepAt       = 0;
